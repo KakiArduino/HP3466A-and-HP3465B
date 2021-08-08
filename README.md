@@ -29,3 +29,13 @@ Fig.1: Reading the RunDown time.
 
 Fig.2: Reading of “+” sign and start of interrupt (reading of RUE signal).
 
+
+<p align="center">
+<img src="RUE.bmp" width="700">
+</p>
+
+
+Fig.3: ADC timing diagram.
+
+
+
