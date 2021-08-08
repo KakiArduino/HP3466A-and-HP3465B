@@ -15,7 +15,7 @@ RunDown starts with a pulse on the RUE (RunUp Enable) line. This signal feeds a 
 
 
 <p align="center">
-<img src="FURGCAN_frame.png" width="700">
+<img src="RMM_RMP.bmp" width="700">
 </p>
 
 
