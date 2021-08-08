@@ -15,7 +15,7 @@ RunDown starts with a pulse on the RUE (RunUp Enable) line. This signal feeds a 
 
 
 <p align="center">
-<img src="RMM_RMP.bmp" width="700">
+<img src="RMM_RMP.jpg" width="700">
 </p>
 
 
@@ -23,7 +23,7 @@ Fig.1: Reading the RunDown time.
 
 
 <p align="center">
-<img src="RUE.bmp" width="700">
+<img src="RUE.jpg" width="700">
 </p>
 
 
@@ -31,7 +31,7 @@ Fig.2: Reading of “+” sign and start of interrupt (reading of RUE signal).
 
 
 <p align="center">
-<img src="Hp3465_Arduino.jpg" width="700">
+<img src="Hp3466_timing" width="700">
 </p>
 
 
@@ -52,4 +52,14 @@ Obs.3: The diagram of the LED display represented on page 8.34 is incorrect. Con
 - It is always possible to correct the Arduino readings, by a multiplicative factor, close to 1.  
 
 
+<p align="center">
+<img src="Hp3466_Arduino.jpg" width="700">
+</p>
+
+
+Fig.4: Arduino connection diagram
+
+
+
+The Arduino's serial communication lines are connected through an electrical isolator (Si8441AA) which allows the HP3466A (battery-powered) to carry out measurements in non-Earth referenced systems. It has not been tested but is believed to support at least 500 Vdc isolation. 
 
