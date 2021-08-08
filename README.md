@@ -130,6 +130,7 @@ Pin distribution on the Multimeter's rear panel connector and signal distributio
 Comments:
 
 (a) HP3466A: Fosc = 199.9046 kHz;
+
 (b) HP3465B: Fosc = 99.9356kHz;
  
 Measured with HP3416B (frequency meter).
@@ -139,11 +140,3 @@ Measured with HP3416B (frequency meter).
 - Black = Reset (DTR);
 - White = Tx (Arduino transmitting)
 - Green = Rx (Arduino receiving)
-
-Comments:
-
-(a) HP3466A: Fosc = 199.9046 kHz;
-(b) HP3465B: Fosc = 99.9356kHz;
- 
-Measured with HP3416B (frequency meter).
-
