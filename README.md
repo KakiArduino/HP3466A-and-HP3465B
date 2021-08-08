@@ -70,4 +70,80 @@ The base code that can be modified for each specific need. The first block (from
 #Modification of HP3465B for reading with Arduino
 
 
+The HP3465B is one generation prior to the HP3466A, both have a minimum sensitivity of 1 uV (20 mVdc scale) and 4 1/2D resolution. The HP3465b also utilizes a dual-ramp ADC. The charge time of the integration capacitor (RunUp) is fixed at 100 ms and the discharge time (RunDown) varies according to the measured value and is between 0 to 200 ms. The integration capacitor is C19 (0.44 uF), diagram 2.
+
+Arduino measures the RunDown time through the pulseIn function and returns this time measured in microseconds. Depending on the input signal polarity, the integration ramp can be positive or negative, so there are two signals for RunDown: pin 6 of U8 (signal I1) for positive voltage measurements and pin 9 of U8 (signal I2) for measurements of negative voltages and resistance measurements (Ohms), ac voltage and ac current. The complete measurement cycle (zero, RunUP and RunDown) is controlled by pin 3 of U9 (IO signal) and takes around 400 ms.
+
+
+
+<p align="center">
+<img src="Hp3465_Arduino.jpg" width="700">
+</p>
+
+
+Fig.5: Modification to adapt RunDown time and interrupt signals for measurement by Arduino platform and Arduino input and output connection.
+
+The IO signal feeds a FET (2N7000) and triggers the interrupt (pin 2) on the Arduino. In the interrupt routine, signals I1 and I2 trigger two FETs (2N7000) in the OR configuration and the output is connected to pin 4 of the Arduino, which through the pulseIn command measures the time of the I1I2 signal (which corresponds to the multimeter's input signal ) and returns the value in microseconds. And pin 6 of the Arduino is connected to the PL signal (polarity) of the HP3465B, which at the input of the interrupt routine reads pin 6 with the digitalRead command which returns false or true according to the polarity of the input signal.
+
+
+
+<p align="center">
+<img src="Hp3465_timing.jpg" width="700">
+</p>
+
+
+Fig.6: ADC timing diagram.
+
+As there is no temporal delay between the falling edge of RunUp (charge period of capacitor C19 and fixed time at 100ms) and rising edge of RunDown (the falling edge of C19 varies according to the accumulated charge in RunUP, therefore, this time goes from zero to 200 ms - full scale), so the start of interrupt is trigged at the start of RunUP and the interrupt routine will measure the RunDown pulse width time. In the 100 ms interval between the start of the interruption and the start of the RunDown measurement, the level of the PL point (polarity) is observed and recorded whether the polarity of the measured signal is positive or not (see the discussion of polarity of the HP3466A).
+
+Similar to the modification of the HP3466A, an Arduino ProMini (Atmega 328) is used. The difference on the HP3465B is that the logic part is powered by negative voltage, so the -7 V represents the “zero” level and the 0 V (ground) represents the “one” level. As the Arduino works between 3V3 and 5V0 the ground potential (0V) is “raised” through a 3V0 zener connected to ground, ie the Arduino is between the potentials of -7V and -2.7 V (difference of 4 .3V). The “zero” level remains at -7V0 and the “one” level is shifted to -2V7, which is what makes the 3V0 zener on the PL line and the FET transistors for the RunDown interrupt and measure signals. Note that VCC in the diagram in Fig.5 corresponds to -2V7.
+
+The base code is the same as the HP3466A, and the “IO” signal triggers the interrupt on pin 2; the “I1I2” signal carries the RunDown information to pin 4 and the “Sign” signal the level referring to the existence or not of the “+” signal in the measurement. Here the difference is that for “Sign” the pulse width is not measured, but the logic level “1” or “0” (command “digitalRead(Sign)”). The rest of the analysis is similar to the one performed above for the HP3466A code.
+
+Note: It is not implemented yet, but it is intended to perform the reading on the computer using the Python program to set up a routine for reading the serial port. It is also necessary to connect a USB-Serial converter (TTL) externally to the Multimeter that has the DTR (reset) terminal, alternatively, you can use an Arduino Uno board, remove the Atmega328 chip (from the socket) and use the Rx and Tx pins (digital 0 and digital 1 of the board) and the Reset for the DTR, in addition to the ground ( 0 V ) and 5V0.
+
+It is suggested to add in the code a multiplicative variable (“factor” for example) to correct small deviations in the reading, by multiplying the value read by this factor (“reading” * or / “factor”). It is also possible to implement an averaging routine and send the read average value to the computer.
+
+Extra care must be taken if you use automatic scaling on the Multimeter, as the function and scale information is not passed to the Arduino. It is also not possible to control (send commands to the Meter) remotely.
+
+The entire arrangement of measurements must be performed manually and only readings (or collections) are performed automatically. 
+
+Appendix: Other connections
+
+
+
+<p align="center">
+<img src="Apendice.jpg" width="700">
+</p>
+
+
+Pin distribution on the Multimeter's rear panel connector and signal distribution on the HP3466A internal adapter card connector.
+
+* Identification of external cable wires:
+
+- Mesh = Earth (0V);
+- Red = 5V0;
+- Black = Reset (DTR);
+- White = Tx (Arduino transmitting)
+- Green = Rx (Arduino receiving)
+
+Comments:
+
+(a) HP3466A: Fosc = 199.9046 kHz;
+(b) HP3465B: Fosc = 99.9356kHz;
+ 
+Measured with HP3416B (frequency meter).
+
+- Mesh = Earth (0V);
+- Red = 5V0;
+- Black = Reset (DTR);
+- White = Tx (Arduino transmitting)
+- Green = Rx (Arduino receiving)
+
+Comments:
+
+(a) HP3466A: Fosc = 199.9046 kHz;
+(b) HP3465B: Fosc = 99.9356kHz;
+ 
+Measured with HP3416B (frequency meter).
 
