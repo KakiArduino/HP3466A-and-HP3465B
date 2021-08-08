@@ -19,6 +19,13 @@ RunDown starts with a pulse on the RUE (RunUp Enable) line. This signal feeds a 
 </p>
 
 
-
 Fig.1: Reading the RunDown time.
+
+
+<p align="center">
+<img src="RUE.bmp" width="700">
+</p>
+
+
+Fig.2: Reading of “+” sign and start of interrupt (reading of RUE signal).
 
