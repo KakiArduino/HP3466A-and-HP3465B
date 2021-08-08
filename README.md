@@ -12,3 +12,13 @@ Capacitor C402 charges with positive or negative polarity depending on the selec
 
 To determine the polarity of the input signal, the “+” signal is read through two signals on pin 3 of U906 and pin 10 of U901. It supplies two BAT54 diodes and one FET 2N7000, which generates a negative pulse of the order of 700 us if the “+” signal is activated and no pulse if the “+” signal is not activated.
 RunDown starts with a pulse on the RUE (RunUp Enable) line. This signal feeds a FET (2N7000) which triggers the interrupt on the Arduino and the interrupt routine starts reading the pulse width (Ramp- or Ramp+).
+
+
+<p align="center">
+<img src="FURGCAN_frame.png" width="700">
+</p>
+
+
+
+Fig.1: Reading the RunDown time.
+
