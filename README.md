@@ -37,5 +37,19 @@ Fig.2: Reading of “+” sign and start of interrupt (reading of RUE signal).
 
 Fig.3: ADC timing diagram.
 
+The counting process starts with RUE line transitioning to level "1", after 1.68 ms the RMM (or RMP) line changes to level "0", starting the counting time (which is proportional to the multimeter input value) and discharging C402. When C402 is fully discharged, it ends the count by changing the RMM (or RMP) line to level “1”.
+
+The RUE line transition triggers the Arduino interrupt (pin 2). In the interrupt routine there are 2 commands:
+(a) One to measure the temporal width (pulseIn) of pin 4 of the Arduino that corresponds to the RMM or RMP lines.
+(b) The second command measures the temporal width (pulseIn) of pin 6 of the Arduino that corresponds to the triggering of the “+” signal. If the reading of pin 6 returns “zero”, it means that the polarity of the input signal is “-”.
+
+Obs.1: Measurements of Vac, Iac and Resistance (Ohms) no signal (“+” or “-”) is triggered and therefore the reading returns as if it were a negative value.
+
+Obs.2: in the “Ohms” function, OVL (over load) corresponds to ~270 ms.
+
+Obs.3: The diagram of the LED display represented on page 8.34 is incorrect. Consult the HP5082 display data sheet (see material list).
+
+- It is always possible to correct the Arduino readings, by a multiplicative factor, close to 1.  
+
 
 
