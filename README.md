@@ -31,7 +31,7 @@ Fig.2: Reading of “+” sign and start of interrupt (reading of RUE signal).
 
 
 <p align="center">
-<img src="Hp3466_timing.bmp" width="700">
+<img src="Hp3465_Arduino.jpg" width="700">
 </p>
 
 
